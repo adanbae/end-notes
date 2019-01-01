@@ -1,12 +1,12 @@
 import { NOTE_FRAGMENT } from "./fragments";
 import { GET_NOTES } from "./queries";
-import { saveNotes } from "./offline";
+import { saveNotes, restoreNotes } from "./offline";
 
 // 1-7
 export const defaults = {
     // react apollo - local state 일 땐
     //                __typename 추가 필요 
-  notes: []
+  notes: restoreNotes()
 };
 
 // 1-7
