@@ -1,16 +1,25 @@
 import { NOTE_FRAGMENT } from "./fragments";
 import { GET_NOTES } from "./queries";
 
+// 1-7
 export const defaults = {
+    // react apollo - local state 일 땐
+    //                __typename 추가 필요 
   notes: [
     {
       __typename: "Note",
       id: 1,
       title: "First",
-      content: "Second"
+      content: "- Second"
     }
   ]
 };
+
+// 1-7
+// graphql - schema - 어떤 형태로 보여지는지
+//                    무엇을 가지고 있고, 안가지고 있는지
+//                    graphQL 언어으로 작성
+//                    서버 대용으로 작성
 export const typeDefs = [
   `
     schema {
@@ -32,6 +41,8 @@ export const typeDefs = [
     }
     `
 ];
+
+// 1-7
 export const resolvers = {
   Query: {
     note: (_, variables, { cache }) => {
@@ -39,6 +50,7 @@ export const resolvers = {
         __typename: "Note",
         id: variables.id
       });
+      console.log(id);
       const note = cache.readFragment({ fragment: NOTE_FRAGMENT, id });
       return note;
     }
@@ -58,6 +70,8 @@ export const resolvers = {
           notes: [newNote, ...notes]
         }
       });
+
+      // ... - array 안의 모든 구성물을 뜻함
       return newNote;
     },
     editNote: (_, { id, title, content }, { cache }) => {
