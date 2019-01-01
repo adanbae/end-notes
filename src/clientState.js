@@ -1,18 +1,12 @@
 import { NOTE_FRAGMENT } from "./fragments";
 import { GET_NOTES } from "./queries";
+import { saveNotes } from "./offline";
 
 // 1-7
 export const defaults = {
     // react apollo - local state 일 땐
     //                __typename 추가 필요 
-  notes: [
-    {
-      __typename: "Note",
-      id: 1,
-      title: "First",
-      content: "- Second"
-    }
-  ]
+  notes: []
 };
 
 // 1-7
@@ -70,7 +64,7 @@ export const resolvers = {
           notes: [newNote, ...notes]
         }
       });
-
+      saveNotes(cache);
       // ... - array 안의 모든 구성물을 뜻함
       return newNote;
     },
@@ -90,6 +84,7 @@ export const resolvers = {
         fragment: NOTE_FRAGMENT,
         data: updatedNote
       });
+      saveNotes(cache);
       return updatedNote;
     }
   }
